@@ -21,8 +21,8 @@
  *  0  => true
  *  -5 => false
  */
-function isPositive(/* number */) {
-  throw new Error('Not implemented');
+function isPositive(number) {
+  return number >= 0 ? Boolean(1) : Boolean(0);
 }
 
 /**
@@ -38,8 +38,10 @@ function isPositive(/* number */) {
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
  */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  if (a > b && a > c) return a;
+  if (b > a && b > c) return b;
+  return c;
 }
 
 /**
@@ -60,8 +62,11 @@ function getMaxNumber(/* a, b, c */) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  if (queen.x === king.x) return true;
+  if (queen.y === king.y) return true;
+  if (Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y)) return true;
+  return false;
 }
 
 /**
@@ -82,8 +87,8 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  return a + b > c && a + c > b && b + c > a;
 }
 
 /**
@@ -100,8 +105,32 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  const lookup = [
+    { rom: 'M', ara: 1000 },
+    { rom: 'CM', ara: 900 },
+    { rom: 'D', ara: 500 },
+    { rom: 'CD', ara: 400 },
+    { rom: 'C', ara: 100 },
+    { rom: 'XC', ara: 90 },
+    { rom: 'L', ara: 50 },
+    { rom: 'XL', ara: 40 },
+    { rom: 'X', ara: 10 },
+    { rom: 'IX', ara: 9 },
+    { rom: 'V', ara: 5 },
+    { rom: 'IV', ara: 4 },
+    { rom: 'I', ara: 1 },
+  ];
+  let roman = '';
+  let innerNum = num;
+
+  for (let i = 0; i < lookup.length; i += 1) {
+    while (innerNum >= lookup[i].ara) {
+      roman += lookup[i].rom;
+      innerNum -= lookup[i].ara;
+    }
+  }
+  return roman;
 }
 
 /**
