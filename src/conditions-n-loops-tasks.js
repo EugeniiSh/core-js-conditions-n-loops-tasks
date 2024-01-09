@@ -148,8 +148,60 @@ function convertToRomanNumerals(num) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let result = '';
+
+  for (let i = 0; i < numberStr.length; i += 1) {
+    switch (true) {
+      case numberStr[i] === '1':
+        result += 'one';
+        break;
+      case numberStr[i] === '2':
+        result += 'two';
+        break;
+      case numberStr[i] === '3':
+        result += 'three';
+        break;
+      case numberStr[i] === '4':
+        result += 'four';
+        break;
+      case numberStr[i] === '5':
+        result += 'five';
+        break;
+      case numberStr[i] === '6':
+        result += 'six';
+        break;
+      case numberStr[i] === '7':
+        result += 'seven';
+        break;
+      case numberStr[i] === '8':
+        result += 'eight';
+        break;
+      case numberStr[i] === '9':
+        result += 'nine';
+        break;
+      case numberStr[i] === '0':
+        result += 'zero';
+        break;
+      case numberStr[i] === '.':
+        result += 'point';
+        break;
+      case numberStr[i] === ',':
+        result += 'point';
+        break;
+      case numberStr[i] === '-':
+        result += 'minus';
+        break;
+      default:
+        result += '';
+    }
+
+    if (i < numberStr.length - 1) {
+      result += ' ';
+    }
+  }
+
+  return result;
 }
 
 /**
@@ -164,8 +216,13 @@ function convertNumberToString(/* numberStr */) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  let result = '';
+
+  for (let i = str.length - 1; i >= 0; i -= 1) {
+    result += str[i];
+  }
+  return result === str;
 }
 
 /**
@@ -182,8 +239,16 @@ function isPalindrome(/* str */) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  let result = -1;
+
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === letter) {
+      result = i;
+      break;
+    }
+  }
+  return result;
 }
 
 /**
@@ -201,8 +266,16 @@ function getIndexOf(/* str, letter */) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  const numStr = `${num}`;
+  const digitStr = `${digit}`;
+
+  for (let i = 0; i < numStr.length; i += 1) {
+    if (numStr[i] === digitStr) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /**
@@ -218,8 +291,23 @@ function isContainNumber(/* num, digit */) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  let leftSum = 0;
+  let rightSum = 0;
+  let result = -1;
+
+  for (let i = 1; i < arr.length; i += 1) {
+    rightSum += arr[i];
+  }
+  for (let i = 0; i < arr.length; i += 1) {
+    if (leftSum === rightSum) {
+      result = i;
+      return result;
+    }
+    leftSum += arr[i];
+    rightSum -= arr[i + 1];
+  }
+  return result;
 }
 
 /**
@@ -243,8 +331,41 @@ function getBalanceIndex(/* arr */) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const matrix = [];
+  for (let i = 0; i < size; i += 1) {
+    matrix[i] = [];
+  }
+
+  const sizeN = size - 1;
+  let depth = 0;
+  let count = 1;
+
+  while (depth <= size) {
+    for (let i = depth; i <= sizeN - depth; i += 1) {
+      matrix[depth][i] = count;
+      count += 1;
+    }
+
+    for (let i = depth + 1; i <= sizeN - depth; i += 1) {
+      matrix[i][sizeN - depth] = count;
+      count += 1;
+    }
+
+    for (let i = sizeN - depth - 1; i >= depth; i -= 1) {
+      matrix[sizeN - depth][i] = count;
+      count += 1;
+    }
+
+    for (let i = sizeN - depth - 1; i >= depth + 1; i -= 1) {
+      matrix[i][depth] = count;
+      count += 1;
+    }
+
+    depth += 1;
+  }
+
+  return matrix;
 }
 
 /**
@@ -262,8 +383,24 @@ function getSpiralMatrix(/* size */) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const matrixN = matrix;
+  const tempMatrix = [];
+  const size = matrix.length - 1;
+
+  for (let i = 0; i <= size; i += 1) {
+    tempMatrix[i] = [];
+    for (let j = 0; j <= size; j += 1) {
+      tempMatrix[i][j] = matrix[i][j];
+    }
+  }
+
+  for (let i = 0; i <= size; i += 1) {
+    for (let j = 0; j <= size; j += 1) {
+      matrixN[j][size - i] = tempMatrix[i][j];
+    }
+  }
+  return matrixN;
 }
 
 /**
