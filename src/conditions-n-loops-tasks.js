@@ -417,8 +417,20 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function sortByAsc(arr) {
+  const arr2 = arr;
+
+  for (let i = 1; i < arr.length; i += 1) {
+    const tempItem = arr[i];
+
+    let j = i;
+    while (j > 0 && tempItem < arr[j - 1]) {
+      arr2[j] = arr[j - 1];
+      j -= 1;
+    }
+    arr2[j] = tempItem;
+  }
+  return arr2;
 }
 
 /**
@@ -438,8 +450,29 @@ function sortByAsc(/* arr */) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  let iter = iterations;
+  let str2 = str;
+  let index = 0;
+
+  while (iter > 0) {
+    let odd = '';
+    let honest = '';
+    for (let i = 0; i < str2.length; i += 1) {
+      if (i % 2 === 0) {
+        odd += str2[i];
+      } else {
+        honest += str2[i];
+      }
+    }
+    str2 = odd + honest;
+    iter -= 1;
+    index += 1;
+    if (str2 === str) {
+      iter = iterations % index;
+    }
+  }
+  return str2;
 }
 
 /**
@@ -459,8 +492,48 @@ function shuffleChar(/* str, iterations */) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  const numArr = [];
+  let num = number;
+  while (num > 0) {
+    numArr.unshift(num % 10);
+    num = Math.floor(num / 10);
+  }
+
+  for (let i = numArr.length - 2; i >= 0; i -= 1) {
+    if (numArr[i] < numArr[i + 1]) {
+      const rightArr = [];
+      for (let j = i + 1; j < numArr.length; j += 1) {
+        rightArr.push(numArr[j]);
+      }
+
+      let maxMin = Math.max(...rightArr);
+      let maxMinIndex = rightArr.findIndex((item) => item === maxMin);
+
+      for (let k = 0; k < rightArr.length; k += 1) {
+        if (rightArr[k] > numArr[i] && rightArr[k] < maxMin) {
+          maxMinIndex = k;
+          maxMin = rightArr[k];
+        }
+      }
+
+      const tempNum = numArr[i];
+      numArr[i] = rightArr[maxMinIndex];
+      rightArr[maxMinIndex] = tempNum;
+
+      rightArr.sort((a, b) => a - b);
+
+      let count = 0;
+      for (let l = i + 1; l < numArr.length; l += 1) {
+        numArr[l] = rightArr[count];
+        count += 1;
+      }
+
+      return Number(numArr.join(''));
+    }
+  }
+
+  return number;
 }
 
 module.exports = {
